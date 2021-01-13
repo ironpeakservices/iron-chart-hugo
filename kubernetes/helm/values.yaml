@@ -1,5 +1,5 @@
 # namespace to deploy to
-namespace: "venclave"
+namespace: ""
 
 # name of the chart
 name: "iron-chart-hugo"

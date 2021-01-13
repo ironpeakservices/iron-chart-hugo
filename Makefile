@@ -1,5 +1,5 @@
 
-NAMESPACE="venclave"
+NAMESPACE=""
 REGISTRY="ghcr.io/ironpeakservices/iron-chart-hugo"
 NAME="iron-chart-hugo"
 STAGE="dev"
