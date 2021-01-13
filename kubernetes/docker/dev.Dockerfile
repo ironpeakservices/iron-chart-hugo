@@ -1,4 +1,4 @@
-FROM go
+FROM klakegg/hugo:0.80.0
 
 LABEL org.opencontainers.image.source="https://github.com/ironpeakservices/iron-chart-hugo"
 
