@@ -50,3 +50,4 @@ Let's develop in Kubernetes too. Fork me!
 1. Fork the repository
 2. Change all references to ironpeakservices, hazcod or this repository.
 3. Provide your GitHub secret names in `.github/workflows/`.
+4. Create a `helmrepo` branch which will host your Chart tarballs.
