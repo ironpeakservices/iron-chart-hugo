@@ -1,0 +1,94 @@
+name: Linting
+
+on: [pull_request]
+
+jobs:
+
+  # k8slint:
+  #   name: Kubernetes
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   -
+  #     uses: actions/checkout@v2
+  #   -
+  #     uses: makocchi-git/actions-k8s-manifests-validate-kubeval@v1.0.1
+  #     with:
+  #       files: kubernetes/helm/templates/
+  #       token: ${{ secrets.GITHUB_TOKEN }}
+
+  stylelint:
+    name: Styles
+    runs-on: ubuntu-latest
+    steps:
+    -
+      uses: actions/checkout@v2
+    -
+      name: stylelint
+      uses: reviewdog/action-stylelint@v1.9.0
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review
+        stylelint_input: '**/*.css'
+
+  eslint:
+    name: JavaScript
+    runs-on: ubuntu-latest
+    steps:
+    -
+      uses: actions/checkout@v2
+    -
+      name: install eslint dependencies
+      run: |
+        npm install eslint -D
+        npm install eslint-plugin-import@latest --save-dev
+        npm install eslint-plugin-node@latest --save-dev
+        npm install eslint-plugin-promise@latest --save-dev
+    -
+      name: eslint
+      uses: reviewdog/action-eslint@v1.11.3
+      with:
+        reporter: github-pr-review
+        eslint_flags: '--config .github/eslint.json static/js/'
+  
+  codespell:
+    name: Language
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Check out code.
+      uses: actions/checkout@v2
+    -
+      name: codespell
+      uses: plettich/action-codespell@v0.3
+      with:
+        github_token: ${{ secrets.github_token }}
+
+  yamllint:
+    name: YAML
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Check out code.
+      uses: actions/checkout@v2
+    -
+      name: yamllint
+      uses: reviewdog/action-yamllint@v1
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review
+        yamllint_flags: 'docker/'
+
+  hadolint:
+    name: Dockerfiles
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Check out code.
+      uses: actions/checkout@v2
+    -
+      name: hadolint
+      uses: reviewdog/action-hadolint@v1
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review
+        hadolint_flags: 'docker/'

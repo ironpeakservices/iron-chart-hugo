@@ -1,0 +1,25 @@
+version: 2
+
+updates:
+-
+  package-ecosystem: github-actions
+  directory: "/"
+  target-branch: dev
+  schedule:
+    interval: daily
+    time: '04:00'
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: "chore"
+    include: "scope"
+-
+  package-ecosystem: docker
+  directory: "/kubernetes/docker/"
+  target-branch: dev
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  commit-message:
+    prefix: "feat"
+    include: "scope"

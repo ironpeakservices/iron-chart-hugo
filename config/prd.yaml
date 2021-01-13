@@ -1,0 +1,23 @@
+assetDir: static
+publishDir: generated
+
+baseURL: 'https://myapp.com/'
+
+languageCode: en-us
+DefaultContentLanguage: en
+languages:
+  en:
+    languageName: English
+    weight: 1
+
+disableHugoGeneratorInject: true
+#disableLiveReload: true
+
+enableRobotsTXT: true
+
+minificationOptions:
+  KeepConditionalComments: false
+  KeepEndTags: false
+
+params:
+  # custom prd params here

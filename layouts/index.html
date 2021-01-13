@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="{{ .Language }}">
+
+{{ partial "header.html" . }}
+
+<body>
+
+    <!--[if lt IE 8]>
+    <p class="browserupgrade">
+    {{ i18n "outdated_browser_warning" }}
+    <a href="https://browsehappy.com/">BrowseHappy</a>
+    </p>
+    <![endif]-->
+
+    {{ partial "navbar.html" }}
+
+    <main class="overflow-hidden">
+    
+        {{ i18n "my_custom_title" }}
+        
+    </main>
+
+    {{ partial "footer.html" }}
+</body>
+
+</html>

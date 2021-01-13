@@ -1,0 +1,7 @@
+name: iron-chart-hugo
+description: 
+version: dev
+apiVersion: v1
+keywords: ["ironpeak","frontend","hugo","chart"]
+sources: []
+home: https://github.com/ironpeakservices/iron-chart-hugo

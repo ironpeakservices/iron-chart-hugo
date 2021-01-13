@@ -1,0 +1,33 @@
+<head>
+    <meta charset="utf-8">
+    
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <![endif]-->
+    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!--
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="icon" href="/img/favicon.ico">
+    -->
+
+    <meta name="robots" content="index, nofollow">
+	<meta name="Cache-Control" content="public">
+    
+    {{ with .OutputFormats.Get "rss" -}}
+	{{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .RelPermalink $.Site.Title | safeHTML }}
+	{{ end -}}
+
+    <title>
+    {{ i18n "my_custom_title" }}
+    </title>
+
+	{{ $cssBootstrap := resources.Get "css/bootstrap.css" }}
+	{{ $cssFonts := resources.Get "css/theme.css" }}
+	{{ $cssTheme := resources.Get "css/fonts.css" }}
+    {{ $cssCustom := resources.Get "css/custom.css" }}
+	{{ $cssBundle := slice $cssBootstrap $cssFonts $cssTheme $cssCustom | resources.Concat "css/styles.css" | resources.Minify | fingerprint }}
+	<link rel="stylesheet" type="text/css" href="{{ $cssBundle.RelPermalink }}" integrity="{{ $cssBundle.Data.Integrity }}">
+</head>

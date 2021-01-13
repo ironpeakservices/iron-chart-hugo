@@ -1,0 +1,13 @@
+# container image specific settings
+image:
+  # local images should use tag :dev so we never build dev images
+  tag: dev
+
+# this enables some stuff such as mounting the working directory into the container
+developmentMode: true
+
+# service port + local port to listen on
+servicePort: 9300
+
+# this gets overwritten by the Makefile
+devWorkingDirectory: ""

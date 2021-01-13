@@ -1,0 +1,28 @@
+# namespace to deploy to
+namespace: "venclave"
+
+# name of the chart
+name: "iron-chart-hugo"
+
+# owner of the chart
+owner: "ironpeakservices"
+
+# enable some stuff for local development
+developmentMode: false
+
+# local path to mount into the container if developmentMode is activated
+devWorkingDirectory: ""
+
+# service port
+servicePort: 9300
+
+# default replica count
+replicaCount: 1
+
+# container image specific settings
+image:
+  # repository to pull image from
+  repository: "ghcr.io/ironpeakservices/iron-chart-hugo"
+  # tag to use for the image
+  tag: ""
+

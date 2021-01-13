@@ -1,0 +1,5 @@
+.github/
+.git/
+.DS_Store
+.gitignore
+Makefile

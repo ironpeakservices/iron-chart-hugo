@@ -1,0 +1,5 @@
+generated/
+.git/
+.DS_Store
+resources/
+generated/

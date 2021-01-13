@@ -1,0 +1,27 @@
+name: Builds
+
+on: [pull_request]
+
+jobs:
+
+  build-dev:
+    name: Development
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Checkout code
+      uses: actions/checkout@v2
+    -
+      name: Docker build
+      run: make build STAGE="dev"
+
+  build-prd:
+    name: Production
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: Checkout code
+      uses: actions/checkout@v2
+    -
+      name: Docker build
+      run: make build STAGE="prd"

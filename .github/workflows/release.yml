@@ -1,0 +1,108 @@
+name: Release
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+
+  release:
+    name: Container Image & Chart 
+    runs-on: ubuntu-latest
+    steps:
+    -
+      uses: actions/checkout@v2
+    - 
+      uses: go-semantic-release/action@v1.11.2
+      id: version
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+    -
+      name: Check for changes
+      uses: andymckay/cancel-action@0.2
+      if: ${{ steps.version.outputs.version == '' }}
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    -
+      name: Docker login
+      if: ${{ steps.version.outputs.version != '' }}
+      env:
+        USER: hazcod
+        REGISTRY: ghcr.io
+      run: |
+        echo "We are going to push for release '${{ steps.version.outputs.version }}'"
+        echo "${{ secrets.PACKAGE_TOKEN }}" | docker login -u "${USER}" --password-stdin "${REGISTRY}"
+    -
+      name: Docker build
+      if: ${{ steps.version.outputs.version != '' }}
+      run: |
+        make build STAGE="prd" RELEASE="${{ steps.version.outputs.version }}"
+    -
+      name: Docker push
+      if: ${{ steps.version.outputs.version != '' }}
+      run: |
+        images=$(make getimages)
+        for image in ${images[@]}; do
+          echo "Pushing image ${image}"
+          docker push "${image}"
+        done
+    -
+      name: Install helm
+      if: ${{ steps.version.outputs.version != '' }}
+      uses: azure/setup-helm@v1
+    -
+      name: Checkout branch for Chart repo
+      if: ${{ steps.version.outputs.version != '' }}
+      env:
+        STATIC_BRANCH: helmrepo
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "${GITHUB_ACTOR}"
+        git fetch
+        git checkout "${STATIC_BRANCH}"
+    -
+      name: Package Helm Charts
+      if: ${{ steps.version.outputs.version != '' }}
+      env:
+        HELM_REPO: .
+        K8S_DIR: kubernetes/helm/
+      run: |
+        helm package "${K8S_DIR}" -d "${HELM_REPO}" --version "${{ steps.version.outputs.version }}"
+    -
+      name: Index Helm Charts
+      if: ${{ steps.version.outputs.version != '' }}
+      env:
+        HELM_REPO: .
+      run: |
+        helm repo index --url "${HELM_REPO_URL}" "${HELM_REPO}"
+    -
+      name: Push to GitHub Pages
+      if: ${{ steps.version.outputs.version != '' }}
+      env:
+        STATIC_BRANCH: helmrepo
+        HELM_REPO: .
+      run: |
+        git add "${HELM_REPO}"
+        git commit -m "chore: add helm charts for release ${{ steps.version.outputs.version }}"
+        git push --set-upstream origin "${STATIC_BRANCH}"
+    # --------------------------------------------------------------------------------
+    -
+      name: Rollback Release
+      if: ${{ failure() && steps.version.outputs.version != '' }}
+      uses: author/action-rollback@stable
+      with:
+        tag: ${{ steps.version.outputs.version }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  cleanpackages:
+    runs-on: ubuntu-latest
+    steps:
+    -
+      name: clean frontend package versions
+      uses: actions/delete-package-versions@v1
+      with:
+        package-name: "iron-chart-hugo/iron-chart-hugo"
+        num-old-versions-to-delete: 5
+        num-most-recent-versions-to-keep: 5
