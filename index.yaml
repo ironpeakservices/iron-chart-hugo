@@ -1,0 +1,17 @@
+apiVersion: v1
+entries:
+  iron-chart-hugo:
+  - apiVersion: v1
+    created: "2021-01-13T09:45:11.704468227Z"
+    digest: dc4188e61b8901e8a6831c9bcb7f8035629bf569c4bc63674a10778b2d093b40
+    home: https://github.com/ironpeakservices/iron-chart-hugo
+    keywords:
+    - ironpeak
+    - frontend
+    - hugo
+    - chart
+    name: iron-chart-hugo
+    urls:
+    - iron-chart-hugo-1.1.0.tgz
+    version: 1.1.0
+generated: "2021-01-13T09:45:11.703944726Z"
