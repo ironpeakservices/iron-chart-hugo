@@ -3,6 +3,9 @@
 Example repository to develop a Hugo website and automatically publish to a Helm chart using security best practices on GitHub.
 Let's develop in Kubernetes too. Fork me!
 
+When developping locally your website any changes will be automagically trigger Hugo to rebuild.
+Production container images pushed to GitHub will use your build code served by a hardened instance of nginx.
+
 ## Development
 
 ```shell
