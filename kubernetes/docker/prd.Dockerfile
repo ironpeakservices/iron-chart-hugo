@@ -1,14 +1,6 @@
-FROM golang:1.15-alpine AS builder
+FROM klakegg/hugo:0.80.0 AS builder
 
-# add unprivileged user
-RUN adduser -s /bin/true -u 1000 -D -h /app app \
-  && sed -i -r "/^(app|root)/!d" /etc/group /etc/passwd \
-  && sed -i -r 's#^(.*):[^:]*$#\1:/sbin/nologin#' /etc/passwd
-
-# add ca certificates and timezone data files
-# hadolint ignore=DL3018
-RUN apk add -U --no-cache ca-certificates tzdata git \
-    hugo
+LABEL org.opencontainers.image.source="https://github.com/ironpeakservices/iron-chart-hugo"
 
 COPY . /site
 
