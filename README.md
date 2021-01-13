@@ -44,3 +44,9 @@ Let's develop in Kubernetes too. Fork me!
 # now let's install our Chart from our repository
 % helm install mychart ironcharthugo/iron-chart-hugo
 ```
+
+## Forking
+
+1. Fork the repository
+2. Change all references to ironpeakservices, hazcod or this repository.
+3. Provide your GitHub secret names in `.github/workflows/`.
