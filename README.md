@@ -1,6 +1,7 @@
 # iron-chart-hugo
 
-Example repository to develop a Hugo-backed website and automatically publish to a Helm chart using security best practices on GitHub. Fork me!
+Example repository to develop a Hugo website and automatically publish to a Helm chart using security best practices on GitHub.
+Let's develop in Kubernetes too. Fork me!
 
 [![Release](https://github.com/ironpeakservices/iron-chart-hugo/workflows/Release/badge.svg)](https://github.com/ironpeakservices/iron-chart-hugo/actions?query=workflow%3ARelease)
 
@@ -22,7 +23,7 @@ Example repository to develop a Hugo-backed website and automatically publish to
 # see what's holding up the Pod
 % kubectl logs <the-pod-id>
 
-# try to force redeploy the Chart
+# try to remove and redeploy the Chart
 % make clean build up logs
 ```
 
@@ -35,8 +36,11 @@ Example repository to develop a Hugo-backed website and automatically publish to
 ## Usage
 
 ```shell
+# first add our helm repository
+# provide a GitHub token if it's private
 % helm repo add ironcharthugo https://${GITHUB_TOKEN}@raw.githubusercontent.com/ironpeakservices/iron-chart-hugo/helmrepo/
-"iron-chart-hugo" has been added to your repositories
+"ironcharthugo" has been added to your repositories
 
+# now let's install our Chart from our repository
 % helm install mychart ironcharthugo/iron-chart-hugo
 ```
