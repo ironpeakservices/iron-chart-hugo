@@ -3,8 +3,6 @@
 Example repository to develop a Hugo website and automatically publish to a Helm chart using security best practices on GitHub.
 Let's develop in Kubernetes too. Fork me!
 
-[![Release](https://github.com/ironpeakservices/iron-chart-hugo/workflows/Release/badge.svg)](https://github.com/ironpeakservices/iron-chart-hugo/actions?query=workflow%3ARelease)
-
 ## Development
 
 ```shell
