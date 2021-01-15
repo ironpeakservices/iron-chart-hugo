@@ -4,17 +4,25 @@ on: [pull_request]
 
 jobs:
 
-  # k8slint:
-  #   name: Kubernetes
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #   -
-  #     uses: actions/checkout@v2
-  #   -
-  #     uses: makocchi-git/actions-k8s-manifests-validate-kubeval@v1.0.1
-  #     with:
-  #       files: kubernetes/helm/templates/
-  #       token: ${{ secrets.GITHUB_TOKEN }}
+  k8slint:
+    name: Kubernetes
+    runs-on: ubuntu-latest
+    steps:
+    -
+      uses: actions/checkout@v2
+    -
+      name: Set up Helm
+      uses: azure/setup-helm@v1
+    -
+      name: Compile helm chart
+      run: |
+        mkdir compiled/
+        helm template kubernetes/helm > compiled/all.yaml
+    -
+      uses: stackrox/kube-linter-action@v1
+      with:
+        directory: compiled/
+        config: .github/kubelinter.yml
 
   stylelint:
     name: Styles
