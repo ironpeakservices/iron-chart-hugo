@@ -1,8 +1,3 @@
-# container image specific settings
-image:
-  # local images should use tag :dev so we never build dev images
-  tag: dev
-
 # this enables some stuff such as mounting the working directory into the container
 developmentMode: true
 

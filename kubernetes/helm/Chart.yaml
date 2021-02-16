@@ -1,6 +1,6 @@
 name: iron-chart-hugo
 description: 
-version: dev
+version: 0
 apiVersion: v1
 keywords: ["ironpeak","frontend","hugo","chart"]
 sources: []

@@ -3,7 +3,7 @@ NAMESPACE=""
 REGISTRY="ghcr.io/ironpeakservices/iron-chart-hugo"
 NAME="iron-chart-hugo"
 STAGE="dev"
-RELEASE=$(STAGE)
+RELEASE="$(STAGE)"
 
 K8S_DIR="kubernetes"
 DOCKER_DIR=$(K8S_DIR)/docker
@@ -20,7 +20,14 @@ build:
 
 up:
 	kubectl create namespace $(NAMESPACE) || true
-	helm upgrade --debug --wait --install --namespace $(NAMESPACE) --values $(K8S_DIR)/$(STAGE).yaml --set "devWorkingDirectory=$(shell pwd)" $(NAME) $(CHART_DIR)
+	helm upgrade \
+		--debug --wait --install \
+		--namespace $(NAMESPACE) \
+		--values $(K8S_DIR)/$(STAGE).yaml \
+		--set "devWorkingDirectory=$(shell pwd)" \
+		--set "image.tag=$(RELEASE)" \
+		--version "$(RELEASE)" \
+		$(NAME) $(CHART_DIR)
 	helm test --logs --namespace $(NAMESPACE) $(NAME)
 	kubectl get pods --namespace $(NAMESPACE)
 

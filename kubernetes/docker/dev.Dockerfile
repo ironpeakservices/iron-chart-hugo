@@ -4,5 +4,5 @@ LABEL org.opencontainers.image.source="https://github.com/ironpeakservices/iron-
 
 WORKDIR /site
 USER 1000
-ENTRYPOINT ["hugo", "serve", "--port=8080", "--bind=0.0.0.0", "--gc", "--source /site", "--config /site/config/dev.yaml"]
+ENTRYPOINT ["hugo", "serve", "--port=8080", "--bind=0.0.0.0", "--source=/site", "--config=/site/config/dev.yaml"]
 EXPOSE 8080
